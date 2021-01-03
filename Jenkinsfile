@@ -15,12 +15,14 @@ pipeline {
         stage('Building') {
             steps {
                 dir('rythm-price-cdk') {
-                    // sh 'npm install'
-                    // sh 'npm run build'
-                    // sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
                     withAWS(credentials: 'build-credentials', region: 'us-west-2') {
                         sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 778477161868.dkr.ecr.us-west-2.amazonaws.com'
                     }
+                }                
+
+                dir('rythm-svc-price') {
+                    sh 'docker build -t rythm-svc-price .'
+                    sh 'docker tag rythm-svc-price:latest 778477161868.dkr.ecr.us-west-2.amazonaws.com/rythm-svc-price:latest'
                 }                
             }
         }
