@@ -20,7 +20,7 @@ pipeline {
                     }
                 }                
 
-                dir('rythm-svc-price') {
+                dir('rythm-price-svc') {
                     sh 'docker build -t rythm-svc-price .'
                     sh 'docker tag rythm-svc-price:latest 778477161868.dkr.ecr.us-west-2.amazonaws.com/rythm-svc-price:latest'
                 }                
