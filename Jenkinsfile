@@ -15,11 +15,13 @@ pipeline {
         stage('Building') {
             steps {
                 dir('rythm-price-cdk') {
-                    sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 778477161868.dkr.ecr.us-west-2.amazonaws.com'
                     // sh 'npm install'
                     // sh 'npm run build'
                     // sh 'cp -r ./build ../cdk-app-02/builds/lambda-app-build'
-                }
+                    withAWS(credentials: 'build-credentials', region: 'us-west-2') {
+                        sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 778477161868.dkr.ecr.us-west-2.amazonaws.com'
+                    }
+                }                
             }
         }
 
@@ -52,7 +54,7 @@ pipeline {
     //         stage('Run the CDK') {
     //             steps {
     //                 dir('cdk-app-02') {
-    //                     withAWS(credentials: 'kysen-build-dev', region: 'us-east-1') {
+    //                     withAWS(credentials: 'build-credentials', region: 'us-east-1') {
     //                         sh 'aws s3 ls'
     //                         sh 'npm install'
     //                         sh 'npm run build'
