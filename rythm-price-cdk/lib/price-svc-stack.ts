@@ -12,23 +12,9 @@ export class PriceSvcStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: PriceSvcStackProps) {
     super(scope, id, props);
 
-    const vpc = ec2.Vpc.fromLookup(this, "RythmVpc", {
-      tags: {
-        application: "rythm",
-      },
+    new cdk.CfnOutput(this, "RythmClusterARN", {
+      value: props.cluster.clusterArn,
     });
-
-    const cluster = ecs.Cluster.fromClusterAttributes(this, "id", {
-      vpc: vpc,
-      clusterName: "rythm-cluster",
-      securityGroups: [],
-    });
-
-    new cdk.CfnOutput(this, "Cluster ARNX", {
-      value: cluster.clusterArn,
-    });
-
-    return;
 
     const repo = ecr.Repository.fromRepositoryName(this, "PriceSvcRepo", "rythm-svc-price");
 
