@@ -27,6 +27,9 @@ pipeline {
                         sh 'docker tag rythm-svc-price:latest 778477161868.dkr.ecr.us-west-2.amazonaws.com/rythm-svc-price:latest'
                         sh 'docker push 778477161868.dkr.ecr.us-west-2.amazonaws.com/rythm-svc-price:latest'
                     }
+                    dir('rythm-price-cdk') {
+                        // sh 'cdk deploy "RythmPriceCdkStackPriceSvcStackB5E813AA" --require-approval=never'
+                    }
                 }
             }
         }

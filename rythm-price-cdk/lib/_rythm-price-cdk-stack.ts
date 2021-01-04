@@ -20,6 +20,10 @@ export class RythmPriceCdkStack extends cdk.Stack {
       securityGroups: [],
     });
 
+    new cdk.CfnOutput(this, "Cluster ARN", {
+      value: cluster.clusterArn,
+    });
+
     const priceEcrStack = new PriceEcrStack(this, "PriceEcrStack", {
       stackName: "price-ecr-stack",
       env: props?.env,
