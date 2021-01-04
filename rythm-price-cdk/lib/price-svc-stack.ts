@@ -5,7 +5,7 @@ import * as ecr from "@aws-cdk/aws-ecr";
 import * as iam from "@aws-cdk/aws-iam";
 
 interface PriceSvcStackProps extends cdk.StackProps {
-  cluster: ecs.Cluster;
+  cluster: ecs.ICluster;
 }
 
 export class PriceSvcStack extends cdk.Stack {

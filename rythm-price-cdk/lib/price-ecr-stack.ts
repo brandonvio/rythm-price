@@ -4,17 +4,13 @@ import * as ecs from "@aws-cdk/aws-ecs";
 import * as ecr from "@aws-cdk/aws-ecr";
 import * as iam from "@aws-cdk/aws-iam";
 
-export class EcrStack extends cdk.Stack {
+export class PriceEcrStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     // Create repositories in ECR.
     const priceSvcRepo = new ecr.Repository(this, "priceSvcRepo", {
       repositoryName: "rythm-svc-price",
-    });
-
-    const socketioSvcRepo = new ecr.Repository(this, "socketioSvcRepo", {
-      repositoryName: "rythm-svc-socketio",
     });
   }
 }

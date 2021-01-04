@@ -17,13 +17,17 @@ pipeline {
                 dir('rythm-price-cdk') {
                     withAWS(credentials: 'build-credentials', region: 'us-west-2') {
                         sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 778477161868.dkr.ecr.us-west-2.amazonaws.com'
+                        sh 'npm install'
+                        sh 'cdk list'
+                        sh 'cdk synth --all'
+                        sh 'cdk deploy "RythmSvcCdkStackCoreStackDC6ECDB4" --require-approval=never'
                     }
-                }                
+                }
 
                 dir('rythm-price-svc') {
                     sh 'docker build -t rythm-svc-price .'
                     sh 'docker tag rythm-svc-price:latest 778477161868.dkr.ecr.us-west-2.amazonaws.com/rythm-svc-price:latest'
-                }                
+                }
             }
         }
 
