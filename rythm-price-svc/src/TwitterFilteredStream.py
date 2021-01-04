@@ -57,6 +57,7 @@ def set_rules(headers, delete, bearer_token):
         {"value": "#eth", "tag": "#eth"},
         {"value": "#silver", "tag": "#silver"},
         {"value": "#gold", "tag": "#gold"},
+        {"value": "#ImpeachTrump", "tag": "#ImpeachTrump"},
     ]
     payload = {"add": sample_rules}
     response = requests.post(
