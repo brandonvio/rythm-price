@@ -14,7 +14,7 @@ export class RythmPriceCdkStack extends cdk.Stack {
       },
     });
 
-    const cluster = ecs.Cluster.fromClusterAttributes(this, "id", {
+    const cluster = ecs.Cluster.fromClusterAttributes(this, "RythmCluster", {
       vpc: vpc,
       clusterName: "rythm-cluster",
       securityGroups: [],
