@@ -42,6 +42,7 @@ export class PriceSvcStack extends cdk.Stack {
 
     taskDefinition.addContainer("PriceContainer", {
       image: ecs.ContainerImage.fromEcrRepository(repo, "latest"),
+      cpu: 256,
       memoryLimitMiB: 512,
       logging: new ecs.AwsLogDriver({ streamPrefix: "PriceService" }),
       environment: {
