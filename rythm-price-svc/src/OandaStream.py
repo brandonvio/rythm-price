@@ -2,15 +2,19 @@ import requests
 import json
 import urllib.parse
 from src.EnvUtil import EnvUtil
-from src.KafkaUtil import KafkaUtil
+# from src.KafkaUtil import KafkaUtil
 
 
-oanda_account_id = EnvUtil.get_secret("OANDA_DEFAULT_ACCOUNT")
-oanda_stream_domain = EnvUtil.get_env("OANDA_STREAM_DOMAIN")
-oanda_token = EnvUtil.get_secret("OANDA_TOKEN")
-oanda_instruments = urllib.parse.quote_plus(EnvUtil.get_env("INSTRUMENTS"))
+# oanda_account_id = EnvUtil.get_env("OANDA_DEFAULT_ACCOUNT")
+# oanda_stream_domain = EnvUtil.get_env("OANDA_STREAM_DOMAIN")
+# oanda_token = EnvUtil.get_env("OANDA_TOKEN")
+# oanda_instruments = urllib.parse.quote_plus(EnvUtil.get_env("INSTRUMENTS"))
+# k = KafkaUtil()
 
-k = KafkaUtil()
+oanda_account_id = ""
+oanda_token = ""
+oanda_stream_domain = "stream-fxtrade.oanda.com"
+oanda_instruments = "EUR_USD,USD_JPY,AUD_USD,USD_CAD,USD_CHF,USD_JPY,EUR_JPY,GBP_USD"
 
 
 def oanda_stream():
@@ -21,14 +25,15 @@ def oanda_stream():
     for line in price_stream.iter_lines():
         if line:
             line = json.loads(line.decode('utf-8'))
+            # print(line)
             if line["type"] == "PRICE":
                 publish_price_to_kafka(line)
 
 
 def publish_price_to_kafka(line):
     price_dict = price_todict(line)
-    k.kafka_send(line)
-    print(price_dict["version"], price_dict["instrument"], price_dict["bid"], price_dict["ask"])
+    # k.kafka_send(line)
+    print(price_dict["time"], price_dict["instrument"], price_dict["bid"], price_dict["ask"])
 
 
 def price_todict(line):
